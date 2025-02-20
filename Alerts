@@ -5,8 +5,9 @@ local function createUI()
     local player = Players.LocalPlayer
     local playerGui = player:WaitForChild("PlayerGui")
     
-    if playerGui:FindFirstChild("PlayerListGui") then
-        return playerGui:FindFirstChild("PlayerListGui").Frame
+    local existingGui = playerGui:FindFirstChild("PlayerListGui")
+    if existingGui then
+        return existingGui.Frame
     end
 
     local screenGui = Instance.new("ScreenGui")
@@ -28,7 +29,8 @@ local function createUI()
     return frame
 end
 
-local function updatePlayerList(frame)
+local function updatePlayerList()
+    local frame = createUI()
     for _, child in ipairs(frame:GetChildren()) do
         if child:IsA("TextLabel") then
             child:Destroy()
@@ -46,20 +48,13 @@ local function updatePlayerList(frame)
 end
 
 local function onCharacterAdded()
-    local playerListFrame = createUI()
-    updatePlayerList(playerListFrame)
+    updatePlayerList()
 end
 
 local player = Players.LocalPlayer
 player.CharacterAdded:Connect(onCharacterAdded)
 
-local playerListFrame = createUI()
-updatePlayerList(playerListFrame)
+updatePlayerList()
 
-Players.PlayerAdded:Connect(function()
-    updatePlayerList(playerListFrame)
-end)
-
-Players.PlayerRemoving:Connect(function()
-    updatePlayerList(playerListFrame)
-end)
+Players.PlayerAdded:Connect(updatePlayerList)
+Players.PlayerRemoving:Connect(updatePlayerList)
