@@ -11,6 +11,7 @@ local function createUI()
     frame.Position = UDim2.new(0.8, 0, 0.6, 0)
     frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
     frame.BorderSizePixel = 2
+    frame.BackgroundTransparency = 0.7
     frame.Parent = screenGui
 
     local uiListLayout = Instance.new("UIListLayout")
