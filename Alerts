@@ -1,0 +1,49 @@
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+
+local function createUI()
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "PlayerListGui"
+    screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0.2, 0, 0.4, 0)
+    frame.Position = UDim2.new(0.8, 0, 0.6, 0)
+    frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    frame.BorderSizePixel = 2
+    frame.Parent = screenGui
+
+    local uiListLayout = Instance.new("UIListLayout")
+    uiListLayout.Parent = frame
+    uiListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    
+    return frame
+end
+
+local function updatePlayerList(frame)
+    for _, child in ipairs(frame:GetChildren()) do
+        if child:IsA("TextLabel") then
+            child:Destroy()
+        end
+    end
+
+    for _, player in ipairs(Players:GetPlayers()) do
+        local playerLabel = Instance.new("TextLabel")
+        playerLabel.Size = UDim2.new(1, 0, 0, 25)
+        playerLabel.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+        playerLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        playerLabel.Text = player.Name
+        playerLabel.Parent = frame
+    end
+end
+
+local playerListFrame = createUI()
+updatePlayerList(playerListFrame)
+
+Players.PlayerAdded:Connect(function()
+    updatePlayerList(playerListFrame)
+end)
+
+Players.PlayerRemoving:Connect(function()
+    updatePlayerList(playerListFrame)
+end)
