@@ -2,9 +2,16 @@ local Players = game:GetService("Players")
 local StarterGui = game:GetService("StarterGui")
 
 local function createUI()
+    local player = Players.LocalPlayer
+    local playerGui = player:WaitForChild("PlayerGui")
+    
+    if playerGui:FindFirstChild("PlayerListGui") then
+        return playerGui:FindFirstChild("PlayerListGui").Frame
+    end
+
     local screenGui = Instance.new("ScreenGui")
     screenGui.Name = "PlayerListGui"
-    screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    screenGui.Parent = playerGui
 
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(0.2, 0, 0.4, 0)
@@ -37,6 +44,14 @@ local function updatePlayerList(frame)
         playerLabel.Parent = frame
     end
 end
+
+local function onCharacterAdded()
+    local playerListFrame = createUI()
+    updatePlayerList(playerListFrame)
+end
+
+local player = Players.LocalPlayer
+player.CharacterAdded:Connect(onCharacterAdded)
 
 local playerListFrame = createUI()
 updatePlayerList(playerListFrame)
