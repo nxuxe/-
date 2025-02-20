@@ -1,5 +1,5 @@
 Visible = true
-Size = 10
+Size = 5
 
 while wait(1) do
 	for i,v in next, workspace.Entities.Infected:GetDescendants() do
@@ -9,6 +9,98 @@ while wait(1) do
 				v.Head.CanCollide = false
 				v.Head.Material = Enum.Material.Neon
 				v.Head.BrickColor = BrickColor.new("Institutional white")
+				v.HumanoidRootPart.Size = Vector3.new(Size - 1, Size - 1, Size - 1)
+				v.HumanoidRootPart.CanCollide = false
+				if Visible == true then
+					v.Head.Transparency = 0.5
+				else
+					v.Head.Transparency = 1
+				end
+			end)
+		end
+	end
+end
+
+Visible = true
+Size = 5
+
+while wait(1) do
+	for i,v in next, workspace.Entities.Infected:GetDescendants() do
+		if v:FindFirstChild("Head") and v:FindFirstChild("HumanoidRootPart") then
+			pcall(function()
+				v.Head.Size = Vector3.new(Size, Size, Size)
+				v.Head.CanCollide = false
+				v.Head.Material = Enum.Material.Neon
+				v.Head.BrickColor = BrickColor.new("Mauve")
+				v.HumanoidRootPart.Size = Vector3.new(Size - 1, Size - 1, Size - 1)
+				v.HumanoidRootPart.CanCollide = false
+				if Visible == true then
+					v.Head.Transparency = 0.5
+				else
+					v.Head.Transparency = 1
+				end
+			end)
+		end
+	end
+end
+
+Visible = true
+Size = 5
+
+while wait(1) do
+	for i,v in next, workspace.Entities.Infected:GetDescendants() do
+		if v:FindFirstChild("Head") and v:FindFirstChild("HumanoidRootPart") then
+			pcall(function()
+				v.Head.Size = Vector3.new(Size, Size, Size)
+				v.Head.CanCollide = false
+				v.Head.Material = Enum.Material.Neon
+				v.Head.BrickColor = BrickColor.new("Pastel Blue")
+				v.HumanoidRootPart.Size = Vector3.new(Size - 1, Size - 1, Size - 1)
+				v.HumanoidRootPart.CanCollide = false
+				if Visible == true then
+					v.Head.Transparency = 0.5
+				else
+					v.Head.Transparency = 1
+				end
+			end)
+		end
+	end
+end
+
+Visible = true
+Size = 5
+
+while wait(1) do
+	for i,v in next, workspace.Entities.Infected:GetDescendants() do
+		if v:FindFirstChild("Head") and v:FindFirstChild("HumanoidRootPart") then
+			pcall(function()
+				v.Head.Size = Vector3.new(Size, Size, Size)
+				v.Head.CanCollide = false
+				v.Head.Material = Enum.Material.Neon
+				v.Head.BrickColor = BrickColor.new("Pastel green")
+				v.HumanoidRootPart.Size = Vector3.new(Size - 1, Size - 1, Size - 1)
+				v.HumanoidRootPart.CanCollide = false
+				if Visible == true then
+					v.Head.Transparency = 0.5
+				else
+					v.Head.Transparency = 1
+				end
+			end)
+		end
+	end
+end
+
+Visible = true
+Size = 5
+
+while wait(1) do
+	for i,v in next, workspace.Entities.Infected:GetDescendants() do
+		if v:FindFirstChild("Head") and v:FindFirstChild("HumanoidRootPart") then
+			pcall(function()
+				v.Head.Size = Vector3.new(Size, Size, Size)
+				v.Head.CanCollide = false
+				v.Head.Material = Enum.Material.Neon
+				v.Head.BrickColor = BrickColor.new("Pastel yellow")
 				v.HumanoidRootPart.Size = Vector3.new(Size - 1, Size - 1, Size - 1)
 				v.HumanoidRootPart.CanCollide = false
 				if Visible == true then
