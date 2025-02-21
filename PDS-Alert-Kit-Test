@@ -1,0 +1,18 @@
+local scripts = {
+    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/PDS-Holder-Alerts-Test",
+    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/PDS-Developer-Alert-Test",
+    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/PDS-Administrator-Alert-Test",
+    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/PDS-HeadModerator-Alert-Test",
+    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/PDS-Moderator-Alert-Test",
+    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/PDS-Contractor-Alerts-Test",
+    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/PDS-ysr-Alerts-Test"
+}
+
+for _, url in pairs(scripts) do
+    local success, err = pcall(function()
+        loadstring(game:HttpGet(url))()
+    end)
+    if not success then
+        warn("Failed to load script:", url, err)
+    end
+end
