@@ -32,7 +32,7 @@ local function createYsrJoinAlert()
     TextLabel.Parent = Frame
 
     local Sound = Instance.new("Sound")
-    Sound.SoundId = "rbxassetid://9113433114"
+    Sound.SoundId = "rbxassetid://82719020266339"
     Sound.Volume = 1
     Sound.Looped = false
     Sound.Parent = ScreenGui
