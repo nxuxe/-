@@ -1,6 +1,6 @@
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
-local Holder = "0uxnx"  -- Change this to the Holder's username
+local Holder = "0uxnx"
 
 local function createHolderJoinAlert()
     if LocalPlayer:FindFirstChildOfClass("PlayerGui"):FindFirstChild("HolderAlertUI") then
