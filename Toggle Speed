@@ -6,9 +6,10 @@ local player = Players.LocalPlayer
 local speedFast = 40
 local isFast = false
 local humanoid
-local defaultSpeed -- Stores the original speed from the game
+local defaultSpeed -- Stores the normal speed from the game
 
 local screenGui = Instance.new("ScreenGui")
+screenGui.ResetOnSpawn = false -- This ensures UI stays after respawn
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
 local speedLabel = Instance.new("TextLabel")
@@ -40,9 +41,9 @@ local function toggleSpeed()
         speedLabel.Text = isFast and "Speed: FAST" or "Speed: Normal"
 
         if isFast then
-            humanoid.WalkSpeed = speedFast -- Lock at 40
+            humanoid.WalkSpeed = speedFast -- Lock speed at 40
         else
-            humanoid.WalkSpeed = defaultSpeed -- Restore the game's default speed
+            humanoid.WalkSpeed = defaultSpeed -- Restore normal game speed (Shift sprinting works again)
         end
     end
 end
