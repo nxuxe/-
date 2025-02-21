@@ -2,6 +2,7 @@ local scripts = {
     "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Alerts",
     "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Fov-MouseWheel",
     "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Toggle%20Speed",
+    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/PDS-Alert-Kit-Test",
     "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Entities-box"
 }
 
