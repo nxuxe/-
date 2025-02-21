@@ -1,0 +1,34 @@
+local infectedFolder = game.Workspace:FindFirstChild("Entities"):FindFirstChild("Infected")
+
+if not infectedFolder then
+    warn("Infected folder not found in Workspace!")
+    return
+end
+
+local function removeHelmet(juggernaut)
+    local helmet = juggernaut:FindFirstChild("Helmet")
+    if helmet then
+        helmet:Destroy()
+        print("Deleted Helmet from Juggernaut!")
+    end
+end
+
+local function onChildAdded(child)
+    if child:IsA("Model") and child.Name == "Juggernaut" then
+        removeHelmet(child) -- Remove helmet if already present
+        child.ChildAdded:Connect(function(newChild) -- Listen for new Helmet models
+            if newChild:IsA("Model") and newChild.Name == "Helmet" then
+                newChild:Destroy()
+                print("Deleted Helmet from new Juggernaut!")
+            end
+        end)
+    end
+end
+
+infectedFolder.ChildAdded:Connect(onChildAdded)
+
+for _, juggernaut in pairs(infectedFolder:GetChildren()) do
+    if juggernaut:IsA("Model") and juggernaut.Name == "Juggernaut" then
+        removeHelmet(juggernaut)
+    end
+end
