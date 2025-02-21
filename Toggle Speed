@@ -9,16 +9,16 @@ local humanoid
 local defaultSpeed -- Stores the normal speed from the game
 
 local screenGui = Instance.new("ScreenGui")
-screenGui.ResetOnSpawn = false -- This ensures UI stays after respawn
+screenGui.ResetOnSpawn = false -- UI stays after respawn
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
 local speedLabel = Instance.new("TextLabel")
-speedLabel.Size = UDim2.new(0, 200, 0, 50)
-speedLabel.Position = UDim2.new(1, -210, 0.5, -25) -- Middle right
-speedLabel.BackgroundColor3 = Color3.new(0, 0, 0)
-speedLabel.TextColor3 = Color3.new(1, 1, 1)
+speedLabel.Size = UDim2.new(0, 100, 0, 30) -- Small text size
+speedLabel.Position = UDim2.new(1, -110, 0.5, -15) -- Middle right
+speedLabel.BackgroundTransparency = 1 -- No background
+speedLabel.TextColor3 = Color3.new(1, 1, 1) -- White text
 speedLabel.TextScaled = true
-speedLabel.Text = "Speed: Normal"
+speedLabel.Text = "NORMAL"
 speedLabel.Parent = screenGui
 
 local function setupCharacter(character)
@@ -26,7 +26,7 @@ local function setupCharacter(character)
 
     defaultSpeed = humanoid.WalkSpeed
     isFast = false
-    speedLabel.Text = "Speed: Normal"
+    speedLabel.Text = "NORMAL"
 
     RunService.RenderStepped:Connect(function()
         if isFast then
@@ -38,7 +38,7 @@ end
 local function toggleSpeed()
     if humanoid and humanoid.Parent then
         isFast = not isFast
-        speedLabel.Text = isFast and "Speed: FAST" or "Speed: Normal"
+        speedLabel.Text = isFast and "FAST" or "NORMAL"
 
         if isFast then
             humanoid.WalkSpeed = speedFast -- Lock speed at 40
