@@ -1,0 +1,41 @@
+local UIS = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+local speedNormal = 16
+local speedFast = 40
+local isFast = false
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+local speedLabel = Instance.new("TextLabel")
+speedLabel.Size = UDim2.new(0, 200, 0, 50)
+speedLabel.Position = UDim2.new(1, -210, 0.5, -25) -- Middle right
+speedLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+speedLabel.TextColor3 = Color3.new(1, 1, 1)
+speedLabel.TextScaled = true
+speedLabel.Text = "Speed: Normal"
+speedLabel.Parent = screenGui
+
+local function setupCharacter(character)
+    local humanoid = character:WaitForChild("Humanoid")
+
+    isFast = false
+    humanoid.WalkSpeed = speedNormal
+    speedLabel.Text = "Speed: Normal"
+
+    UIS.InputBegan:Connect(function(input, gameProcessed)
+        if not gameProcessed and input.KeyCode == Enum.KeyCode.T then
+            isFast = not isFast
+            humanoid.WalkSpeed = isFast and speedFast or speedNormal
+            speedLabel.Text = isFast and "Speed: FAST" or "Speed: Normal"
+        end
+    end)
+end
+
+if player.Character then
+    setupCharacter(player.Character)
+end
+
+player.CharacterAdded:Connect(setupCharacter)
