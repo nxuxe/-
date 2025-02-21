@@ -1,7 +1,12 @@
-loadstring(game:HttpGet('https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Toggle%20Speed'))()
+local scripts = {
+    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Toggle%20Speed",
+    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Rainbow%20-%20TWR",
+    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Fov-MouseWheel",
+    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Alerts"
+}
 
-loadstring(game:HttpGet('https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Rainbow%20-%20TWR'))()
-
-loadstring(game:HttpGet('https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Fov-MouseWheel'))()
-
-loadstring(game:HttpGet('https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Alerts'))()
+for _, url in pairs(scripts) do
+    task.spawn(function()
+        loadstring(game:HttpGet(url))()
+    end)
+end
