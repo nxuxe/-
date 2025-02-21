@@ -18,7 +18,7 @@ local function createYsrJoinAlert()
 
     local Frame = Instance.new("Frame")
     Frame.Size = UDim2.new(0.08, 0, 0.04, 0)
-    Frame.Position = UDim2.new(0.02, 0, 0.05, 0)
+    Frame.Position = UDim2.new(0.02, 0, 0.06, 0)
     Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     Frame.BackgroundTransparency = 0.8
     Frame.Parent = ScreenGui
