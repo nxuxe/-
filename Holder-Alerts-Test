@@ -2,9 +2,12 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local Holder = "0uxnx"
 
+local AlertActive = false
+
 local function createHolderJoinAlert()
-    if LocalPlayer:FindFirstChildOfClass("PlayerGui"):FindFirstChild("HolderAlertUI") then
-        return LocalPlayer.PlayerGui.HolderAlertUI
+    local existingUI = LocalPlayer:FindFirstChildOfClass("PlayerGui"):FindFirstChild("HolderAlertUI")
+    if existingUI then
+        return existingUI
     end
 
     local ScreenGui = Instance.new("ScreenGui")
@@ -12,33 +15,45 @@ local function createHolderJoinAlert()
     ScreenGui.Parent = LocalPlayer:FindFirstChildOfClass("PlayerGui")
 
     local Frame = Instance.new("Frame")
-    Frame.Size = UDim2.new(0.3, 0, 0.15, 0)
-    Frame.Position = UDim2.new(0.35, 0, 0.4, 0)
-    Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 255)  -- Blue color for Holder alert
+    Frame.Size = UDim2.new(0.25, 0, 0.12, 0)  -- Slightly smaller
+    Frame.Position = UDim2.new(0.02, 0, 0.05, 0)  -- Middle left & top (sandwiched)
+    Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Black background
+    Frame.BackgroundTransparency = 0.8  -- 80% transparency
     Frame.Parent = ScreenGui
 
     local TextLabel = Instance.new("TextLabel")
     TextLabel.Text = "Holder Join Server! " .. Holder .. " has joined!"
     TextLabel.Size = UDim2.new(1, 0, 1, 0)
     TextLabel.TextScaled = true
-    TextLabel.BackgroundTransparency = 1
-    TextLabel.TextColor3 = Color3.new(1, 1, 1)
+    TextLabel.BackgroundTransparency = 1  -- No background on text
+    TextLabel.TextColor3 = Color3.fromRGB(0, 0, 255)  -- Blue text
     TextLabel.Parent = Frame
 
     return ScreenGui, Frame
 end
 
-local function showHolderJoinAlert(player)
+local function removeHolderJoinAlert()
+    local existingUI = LocalPlayer:FindFirstChildOfClass("PlayerGui"):FindFirstChild("HolderAlertUI")
+    if existingUI then
+        existingUI:Destroy()
+    end
+end
+
+local function showHolderJoinAlert()
+    if AlertActive then return end
+    AlertActive = true
+
     local ScreenGui, Frame = createHolderJoinAlert()
 
     local function keepAlertFlashing()
-        while true do
+        while AlertActive do
             wait(0.25)
             if not ScreenGui or not ScreenGui.Parent then
                 ScreenGui, Frame = createHolderJoinAlert()
             end
             Frame.Visible = not Frame.Visible
         end
+        removeHolderJoinAlert()
     end
 
     task.spawn(keepAlertFlashing)
@@ -46,6 +61,12 @@ end
 
 Players.PlayerAdded:Connect(function(player)
     if player.Name == Holder then
-        showHolderJoinAlert(player)
+        showHolderJoinAlert()
+    end
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+    if player.Name == Holder then
+        AlertActive = false
     end
 end)
