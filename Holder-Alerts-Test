@@ -15,16 +15,17 @@ local function createHolderJoinAlert()
     ScreenGui.Parent = LocalPlayer:FindFirstChildOfClass("PlayerGui")
 
     local Frame = Instance.new("Frame")
-    Frame.Size = UDim2.new(0.25, 0, 0.12, 0)  -- Slightly smaller
+    Frame.Size = UDim2.new(0.08, 0, 0.04, 0)  -- UI reduced by about two-thirds
     Frame.Position = UDim2.new(0.02, 0, 0.05, 0)  -- Middle left & top (sandwiched)
     Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Black background
     Frame.BackgroundTransparency = 0.8  -- 80% transparency
     Frame.Parent = ScreenGui
 
     local TextLabel = Instance.new("TextLabel")
-    TextLabel.Text = "Holder Join Server! " .. Holder .. " has joined!"
+    TextLabel.Text = "Holder Join Server ! " .. Holder .. " has joined !"
     TextLabel.Size = UDim2.new(1, 0, 1, 0)
-    TextLabel.TextScaled = true
+    TextLabel.TextScaled = false
+    TextLabel.TextSize = 20  -- Text size reduced by about one-third
     TextLabel.BackgroundTransparency = 1  -- No background on text
     TextLabel.TextColor3 = Color3.fromRGB(0, 0, 255)  -- Blue text
     TextLabel.Parent = Frame
