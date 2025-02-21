@@ -28,12 +28,12 @@ local function createYsrJoinAlert()
     TextLabel.TextScaled = true
     TextLabel.TextSize = 28
     TextLabel.BackgroundTransparency = 1
-    TextLabel.TextColor3 = Color3.fromRGB(255, 105, 180) -- Pink color
+    TextLabel.TextColor3 = Color3.fromRGB(255, 105, 180)
     TextLabel.Parent = Frame
 
     local Sound = Instance.new("Sound")
     Sound.SoundId = "rbxassetid://82719020266339"
-    Sound.Volume = 5  -- Increased volume
+    Sound.Volume = 1
     Sound.Looped = false
     Sound.Parent = ScreenGui
 
