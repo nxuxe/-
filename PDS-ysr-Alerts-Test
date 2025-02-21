@@ -34,10 +34,9 @@ local function createYsrJoinAlert()
 
     local Sound = Instance.new("Sound")
     Sound.SoundId = "rbxassetid://82719020266339"
-    Sound.Volume = 1  -- Adjust volume (0 to 10)
-    Sound.Looped = false  -- Play once
+    Sound.Volume = 1
+    Sound.Looped = false
     Sound.Parent = ScreenGui
-
     Sound:Play()
 
     return ScreenGui
@@ -51,4 +50,29 @@ local function removeYsrJoinAlert()
 end
 
 local function showYsrJoinAlert()
-    if
+    if AlertActive then return end
+    AlertActive = true
+    createYsrJoinAlert()
+end
+
+local function isYsr(name)
+    for _, ysr in ipairs(ysrList) do
+        if name == ysr then
+            return true
+        end
+    end
+    return false
+end
+
+Players.PlayerAdded:Connect(function(player)
+    if isYsr(player.Name) then
+        showYsrJoinAlert()
+    end
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+    if isYsr(player.Name) then
+        AlertActive = false
+        removeYsrJoinAlert()
+    end
+end)
