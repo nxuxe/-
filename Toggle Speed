@@ -5,6 +5,7 @@ local player = Players.LocalPlayer
 local speedNormal = 16
 local speedFast = 40
 local isFast = false
+local humanoid
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = player:WaitForChild("PlayerGui")
@@ -19,20 +20,26 @@ speedLabel.Text = "Speed: Normal"
 speedLabel.Parent = screenGui
 
 local function setupCharacter(character)
-    local humanoid = character:WaitForChild("Humanoid")
-
+    humanoid = character:WaitForChild("Humanoid")
+    
     isFast = false
     humanoid.WalkSpeed = speedNormal
     speedLabel.Text = "Speed: Normal"
-
-    UIS.InputBegan:Connect(function(input, gameProcessed)
-        if not gameProcessed and input.KeyCode == Enum.KeyCode.T then
-            isFast = not isFast
-            humanoid.WalkSpeed = isFast and speedFast or speedNormal
-            speedLabel.Text = isFast and "Speed: FAST" or "Speed: Normal"
-        end
-    end)
 end
+
+local function toggleSpeed()
+    if humanoid then
+        isFast = not isFast
+        humanoid.WalkSpeed = isFast and speedFast or speedNormal
+        speedLabel.Text = isFast and "Speed: FAST" or "Speed: Normal"
+    end
+end
+
+UIS.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and input.KeyCode == Enum.KeyCode.T then
+        toggleSpeed()
+    end
+end)
 
 if player.Character then
     setupCharacter(player.Character)
