@@ -22,7 +22,7 @@ local function createHolderJoinAlert()
     Frame.Parent = ScreenGui
 
     local TextLabel = Instance.new("TextLabel")
-    TextLabel.Text = "Holder Join Server! " .. Holder .. " has joined!"
+    TextLabel.Text = " Alerts " .. Holder .. " Alerts "
     TextLabel.Size = UDim2.new(1, 0, 1, 0)
     TextLabel.TextScaled = false
     TextLabel.TextSize = 24
