@@ -24,12 +24,12 @@ local function createHolderJoinAlert()
     Frame.Parent = ScreenGui
 
     local TextLabel = Instance.new("TextLabel")
-    TextLabel.Text = " ! ! ! " .. Holder .. " ! ! ! "
+    TextLabel.Text = " ! ! ! Holder JOINED ! ! ! "
     TextLabel.Size = UDim2.new(1, 0, 1, 0)
     TextLabel.TextScaled = false
     TextLabel.TextSize = 24
     TextLabel.BackgroundTransparency = 1
-    TextLabel.TextColor3 = Color3.fromRGB(0, 0, 255)  -- Blue text
+    TextLabel.TextColor3 = Color3.fromRGB(0, 0, 255)
     TextLabel.Parent = Frame
 
     return ScreenGui, Frame
@@ -61,14 +61,23 @@ local function showHolderJoinAlert()
     task.spawn(keepAlertFlashing)
 end
 
+local function isHolder(name)
+    for _, dev in ipairs(Holder) do
+        if name == dev then
+            return true
+        end
+    end
+    return false
+end
+
 Players.PlayerAdded:Connect(function(player)
-    if player.Name == Holder then
+    if isHolder(player.Name) then
         showHolderJoinAlert()
     end
 end)
 
 Players.PlayerRemoving:Connect(function(player)
-    if player.Name == Holder then
+    if isDHolder(player.Name) then
         AlertActive = false
         removeHolderJoinAlert()
     end
