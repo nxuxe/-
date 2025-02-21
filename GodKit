@@ -1,0 +1,7 @@
+loadstring(game:HttpGet('https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Toggle%20Speed'))()
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Rainbow%20-%20TWR'))()
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Fov-MouseWheel'))()
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Alerts'))()
