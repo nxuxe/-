@@ -22,12 +22,12 @@ local function createHolderJoinAlert()
     Frame.Parent = ScreenGui
 
     local TextLabel = Instance.new("TextLabel")
-    TextLabel.Text = "Holder Join Server ! " .. Holder .. " has joined !"
+    TextLabel.Text = "Holder Join Server! " .. Holder .. " has joined!"
     TextLabel.Size = UDim2.new(1, 0, 1, 0)
     TextLabel.TextScaled = false
-    TextLabel.TextSize = 20  -- Text size reduced by about one-third
-    TextLabel.BackgroundTransparency = 1  -- No background on text
-    TextLabel.TextColor3 = Color3.fromRGB(0, 0, 255)  -- Blue text
+    TextLabel.TextSize = 24
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.TextColor3 = Color3.fromRGB(0, 0, 255)
     TextLabel.Parent = Frame
 
     return ScreenGui, Frame
