@@ -1,0 +1,82 @@
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+
+local specialUsers = {
+    ["nin900500"] = true,
+    ["Ardwyck"] = true,
+    ["0kto"] = true,
+    ["Blackrep"] = true,
+    ["sillypure"] = true,
+    ["RAE181"] = true,
+    ["colosae"] = true,
+    ["TyrantKDN"] = true,
+    ["PartiallyGreen"] = true,
+    ["athreose"] = true,
+    ["Nickaladormz"] = true,
+    ["TimmySavage"] = true,
+    ["Ossalac"] = true,
+    ["theone78lol"] = true,
+    ["PeakDev"] = true,
+    ["vinjiso"] = true,
+    ["EnamelMammal"] = true,
+    ["JohnDrinkin"] = true
+}
+
+local function createUI()
+    local player = Players.LocalPlayer
+    local playerGui = player:WaitForChild("PlayerGui")
+    
+    -- Check if the UI already exists to prevent duplication
+    local existingGui = playerGui:FindFirstChild("PlayerListGui")
+    if existingGui then
+        return existingGui.Frame
+    end
+
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "PlayerListGui"
+    screenGui.Parent = playerGui
+
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0.2, 0, 0.4, 0)
+    frame.Position = UDim2.new(0.8, 0, 0.6, 0)
+    frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    frame.BorderSizePixel = 2
+    frame.BackgroundTransparency = 0.7
+    frame.Parent = screenGui
+
+    local uiListLayout = Instance.new("UIListLayout")
+    uiListLayout.Parent = frame
+    uiListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    
+    return frame
+end
+
+local function updatePlayerList()
+    local frame = createUI()
+    for _, child in ipairs(frame:GetChildren()) do
+        if child:IsA("TextLabel") then
+            child:Destroy()
+        end
+    end
+
+    for _, player in ipairs(Players:GetPlayers()) do
+        local playerLabel = Instance.new("TextLabel")
+        playerLabel.Size = UDim2.new(1, 0, 0, 25)
+        playerLabel.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+        playerLabel.TextColor3 = specialUsers[player.Name] and Color3.fromRGB(128, 0, 128) or Color3.fromRGB(255, 255, 255)
+        playerLabel.Text = player.Name
+        playerLabel.Parent = frame
+    end
+end
+
+local function onCharacterAdded()
+    updatePlayerList()
+end
+
+local player = Players.LocalPlayer
+player.CharacterAdded:Connect(onCharacterAdded)
+
+updatePlayerList()
+
+Players.PlayerAdded:Connect(updatePlayerList)
+Players.PlayerRemoving:Connect(updatePlayerList)
