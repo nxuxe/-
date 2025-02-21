@@ -27,7 +27,7 @@ local function createDeveloperJoinAlert()
     TextLabel.Text = " ! ! ! DEVELOPER JOINED ! ! ! "
     TextLabel.Size = UDim2.new(1, 0, 1, 0)
     TextLabel.TextScaled = false
-    TextLabel.TextSize = 24
+    TextLabel.TextSize = 26
     TextLabel.BackgroundTransparency = 1
     TextLabel.TextColor3 = Color3.fromRGB(0, 0, 255)
     TextLabel.Parent = Frame
@@ -51,10 +51,9 @@ local function showDeveloperJoinAlert()
     local function keepAlertFlashing()
         while AlertActive do
             wait(0.25)
-            if not ScreenGui or not ScreenGui.Parent then
-                ScreenGui, Frame = createDeveloperJoinAlert()
+            if ScreenGui and ScreenGui.Parent then
+                Frame.Visible = not Frame.Visible
             end
-            Frame.Visible = not Frame.Visible
         end
     end
 
