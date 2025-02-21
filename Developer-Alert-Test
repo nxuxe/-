@@ -1,6 +1,6 @@
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
-local Developer = "Ardwyck"
+local Developers = { "Ardwyck" }
 
 local AlertActive = false
 
