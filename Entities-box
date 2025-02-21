@@ -9,7 +9,6 @@ while wait(1) do
 				v.Head.CanCollide = false
 				v.Head.Material = Enum.Material.Neon
 				v.Head.BrickColor = BrickColor.new("Institutional white")
-				v.Head.CFrame = v.Head.CFrame * CFrame.Angles(0, math.rad(180), 0)
 				v.HumanoidRootPart.Size = Vector3.new(Size - 1, Size - 1, Size - 1)
 				v.HumanoidRootPart.CanCollide = false
 				if Visible == true then
