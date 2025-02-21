@@ -2,31 +2,34 @@ local Players = game:GetService("Players")
 local StarterGui = game:GetService("StarterGui")
 
 local specialUsers = {
-    ["nin900500"] = true,
-    ["Ardwyck"] = true,
-    ["0kto"] = true,
-    ["Blackrep"] = true,
-    ["sillypure"] = true,
-    ["RAE181"] = true,
-    ["colosae"] = true,
-    ["TyrantKDN"] = true,
-    ["PartiallyGreen"] = true,
-    ["athreose"] = true,
-    ["Nickaladormz"] = true,
-    ["TimmySavage"] = true,
-    ["Ossalac"] = true,
-    ["theone78lol"] = true,
-    ["PeakDev"] = true,
-    ["vinjiso"] = true,
-    ["EnamelMammal"] = true,
-    ["JohnDrinkin"] = true
+    ["nin900500"] = "Purple",
+    ["Ardwyck"] = "Purple",
+    ["0kto"] = "Purple",
+    ["Blackrep"] = "Purple",
+    ["sillypure"] = "Purple",
+    ["RAE181"] = "Purple",
+    ["colosae"] = "Purple",
+    ["TyrantKDN"] = "Purple",
+    ["PartiallyGreen"] = "Purple",
+    ["athreose"] = "Purple",
+    ["Nickaladormz"] = "Purple"e,
+    ["TimmySavage"] = "Purple",
+    ["Ossalac"] = "Purple",
+    ["theone78lol"] = "Purple",
+    ["PeakDev"] = "Purple",
+    ["vinjiso"] = "Purple",
+    ["EnamelMammal"] = "Purple",
+    ["JohnDrinkin"] = "Purple"
+}
+
+local anotherRoleUsers = {
+    ["0uxnx"] = "Blue"
 }
 
 local function createUI()
     local player = Players.LocalPlayer
     local playerGui = player:WaitForChild("PlayerGui")
     
-    -- Check if the UI already exists to prevent duplication
     local existingGui = playerGui:FindFirstChild("PlayerListGui")
     if existingGui then
         return existingGui.Frame
@@ -60,10 +63,17 @@ local function updatePlayerList()
     end
 
     for _, player in ipairs(Players:GetPlayers()) do
+        local textColor = Color3.fromRGB(255, 255, 255)
+        if specialUsers[player.Name] then
+            textColor = Color3.fromRGB(128, 0, 128)
+        elseif anotherRoleUsers[player.Name] then
+            textColor = Color3.fromRGB(0, 0, 255)
+        end
+
         local playerLabel = Instance.new("TextLabel")
         playerLabel.Size = UDim2.new(1, 0, 0, 25)
         playerLabel.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
-        playerLabel.TextColor3 = specialUsers[player.Name] and Color3.fromRGB(128, 0, 128) or Color3.fromRGB(255, 255, 255)
+        playerLabel.TextColor3 = textColor
         playerLabel.Text = player.Name
         playerLabel.Parent = frame
     end
