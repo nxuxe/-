@@ -30,19 +30,20 @@ local function createUI()
     local player = Players.LocalPlayer
     local playerGui = player:WaitForChild("PlayerGui")
     
-    -- Check if the UI already exists to prevent duplication
     local existingGui = playerGui:FindFirstChild("PlayerListGui")
     if existingGui then
+        print("UI already exists")
         return existingGui.Frame
     end
 
+    print("Creating UI")
     local screenGui = Instance.new("ScreenGui")
     screenGui.Name = "PlayerListGui"
     screenGui.Parent = playerGui
 
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(0.2, 0, 0.4, 0)
-    frame.Position = UDim2.new(0.8, 0, 0.6, 0)
+    frame.Position = UDim2.new(0.8, 0, 1, -10)
     frame.AnchorPoint = Vector2.new(0, 1)
     frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
     frame.BorderSizePixel = 2
@@ -57,6 +58,7 @@ local function createUI()
 end
 
 local function updatePlayerList()
+    print("Updating player list")
     local frame = createUI()
     for _, child in ipairs(frame:GetChildren()) do
         if child:IsA("TextLabel") then
@@ -65,6 +67,7 @@ local function updatePlayerList()
     end
 
     for _, player in ipairs(Players:GetPlayers()) do
+        print("Adding player:", player.Name)
         local textColor = Color3.fromRGB(255, 255, 255)
         if specialUsers[player.Name] then
             textColor = Color3.fromRGB(128, 0, 128)
@@ -82,6 +85,7 @@ local function updatePlayerList()
 end
 
 local function onCharacterAdded()
+    print("Character added, updating UI")
     updatePlayerList()
 end
 
@@ -90,5 +94,12 @@ player.CharacterAdded:Connect(onCharacterAdded)
 
 updatePlayerList()
 
-Players.PlayerAdded:Connect(updatePlayerList)
-Players.PlayerRemoving:Connect(updatePlayerList)
+Players.PlayerAdded:Connect(function(newPlayer)
+    print("Player joined:", newPlayer.Name)
+    updatePlayerList()
+end)
+
+Players.PlayerRemoving:Connect(function(leavingPlayer)
+    print("Player left:", leavingPlayer.Name)
+    updatePlayerList()
+end)
