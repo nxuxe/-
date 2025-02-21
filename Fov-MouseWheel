@@ -1,0 +1,54 @@
+local player = game.Players.LocalPlayer
+local camera = game.Workspace.CurrentCamera
+local UIS = game:GetService("UserInputService")
+
+local defaultFOV = 70
+local minFOV = 50
+local maxFOV = 120
+local fovStep = 5
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+local fovLabel = Instance.new("TextLabel")
+fovLabel.Parent = screenGui
+fovLabel.Size = UDim2.new(0, 100, 0, 50)
+fovLabel.Position = UDim2.new(0, 20, 0.5, -25) -- Middle left corner
+fovLabel.BackgroundTransparency = 1
+fovLabel.TextScaled = true
+fovLabel.TextColor3 = Color3.new(1, 1, 1)
+fovLabel.Font = Enum.Font.SourceSansBold
+fovLabel.Text = "FOV: " .. defaultFOV
+
+local function updateFOV(fov)
+    defaultFOV = math.clamp(fov, minFOV, maxFOV)
+    camera.FieldOfView = defaultFOV
+    fovLabel.Text = "FOV: " .. defaultFOV
+end
+
+local function enableFOVControl()
+    updateFOV(defaultFOV)
+
+    camera:GetPropertyChangedSignal("FieldOfView"):Connect(function()
+        if camera.FieldOfView ~= defaultFOV then
+            camera.FieldOfView = defaultFOV
+        end
+    end)
+
+    UIS.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseWheel then
+            updateFOV(defaultFOV + (input.Position.Z * fovStep))
+        end
+    end)
+end
+
+local function onCharacterAdded(character)
+    wait(1) -- Ensure the character loads fully
+    enableFOVControl()
+end
+
+player.CharacterAdded:Connect(onCharacterAdded)
+
+if player.Character then
+    onCharacterAdded(player.Character)
+end
