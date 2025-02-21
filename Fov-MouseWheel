@@ -8,7 +8,7 @@ local maxFOV = 120
 local fovStep = 5
 
 local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = player:WaitForChild("PlayerGui")
+screenGui.Parent = game:GetService("CoreGui") -- Prevents UI from resetting on death
 
 local fovLabel = Instance.new("TextLabel")
 fovLabel.Parent = screenGui
@@ -43,7 +43,7 @@ local function enableFOVControl()
 end
 
 local function onCharacterAdded(character)
-    wait(1) -- Ensure the character loads fully
+    wait(1) -- Ensure the character is fully loaded
     enableFOVControl()
 end
 
