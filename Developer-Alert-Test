@@ -5,7 +5,6 @@ local Developer = "Ardwyck"
 local AlertActive = false
 
 local function createDeveloperJoinAlert()
-    -- Check if the alert already exists to prevent duplicates
     local existingUI = LocalPlayer:FindFirstChildOfClass("PlayerGui"):FindFirstChild("DeveloperAlertUI")
     if existingUI then
         return existingUI
@@ -56,7 +55,6 @@ local function showDeveloperJoinAlert()
             end
             Frame.Visible = not Frame.Visible
         end
-        removeDeveloperJoinAlert()
     end
 
     task.spawn(keepAlertFlashing)
