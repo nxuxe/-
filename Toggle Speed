@@ -1,5 +1,6 @@
 local UIS = game:GetService("UserInputService")
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService") -- Runs every frame
 
 local player = Players.LocalPlayer
 local speedNormal = 16
@@ -25,6 +26,10 @@ local function setupCharacter(character)
     isFast = false
     humanoid.WalkSpeed = speedNormal
     speedLabel.Text = "Speed: Normal"
+
+    RunService.RenderStepped:Connect(function()
+        humanoid.WalkSpeed = isFast and speedFast or speedNormal
+    end)
 end
 
 local function toggleSpeed()
