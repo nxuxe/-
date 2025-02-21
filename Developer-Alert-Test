@@ -1,0 +1,52 @@
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local Developer = "0uxnx"
+
+local function createDeveloperJoinAlert()
+    if LocalPlayer:FindFirstChildOfClass("PlayerGui"):FindFirstChild("DeveloperAlertUI") then
+        return LocalPlayer.PlayerGui.DeveloperAlertUI
+    end
+
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "DeveloperAlertUI"
+    ScreenGui.Parent = LocalPlayer:FindFirstChildOfClass("PlayerGui")
+
+    local Frame = Instance.new("Frame")
+    Frame.Size = UDim2.new(0.3, 0, 0.15, 0)
+    Frame.Position = UDim2.new(0.35, 0, 0.4, 0)
+    Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 255)  -- Blue color for Developer alert
+    Frame.Parent = ScreenGui
+
+    local TextLabel = Instance.new("TextLabel")
+    TextLabel.Text = "Developer Join Server! " .. Developer .. " has joined!"
+    TextLabel.Size = UDim2.new(1, 0, 1, 0)
+    TextLabel.TextScaled = true
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.TextColor3 = Color3.new(1, 1, 1)
+    TextLabel.Parent = Frame
+
+    return ScreenGui, Frame
+end
+
+local function showDeveloperJoinAlert()
+    local ScreenGui, Frame = createDeveloperJoinAlert()
+
+    local function keepAlertFlashing()
+        while true do
+            wait(0.25)
+            if not ScreenGui or not ScreenGui.Parent then
+                ScreenGui, Frame = createDeveloperJoinAlert()
+            end
+            Frame.Visible = not Frame.Visible
+        end
+    end
+
+    -- Run flashing effect in a separate thread
+    task.spawn(keepAlertFlashing)
+end
+
+Players.PlayerAdded:Connect(function(player)
+    if player.Name == Developer then
+        showDeveloperJoinAlert()
+    end
+end)
