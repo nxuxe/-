@@ -1,29 +1,30 @@
 local Players = game:GetService("Players")
 local StarterGui = game:GetService("StarterGui")
 
-local specialUsers = {
-    ["nin900500"] = "Purple",
-    ["Ardwyck"] = "Purple",
-    ["0kto"] = "Purple",
-    ["Blackrep"] = "Purple",
-    ["sillypure"] = "Purple",
-    ["RAE181"] = "Purple",
-    ["colosae"] = "Purple",
-    ["TyrantKDN"] = "Purple",
-    ["PartiallyGreen"] = "Purple",
-    ["athreose"] = "Purple",
-    ["Nickaladormz"] = "Purple",
-    ["TimmySavage"] = "Purple",
-    ["Ossalac"] = "Purple",
-    ["theone78lol"] = "Purple",
-    ["PeakDev"] = "Purple",
-    ["vinjiso"] = "Purple",
-    ["EnamelMammal"] = "Purple",
-    ["JohnDrinkin"] = "Purple"
+local protectUsers = {
+    ["ucilps"] = true,
+    ["0uxnx"] = true
 }
 
-local anotherRoleUsers = {
-    ["0uxnx"] = "Blue"
+local becareFullUsers = {
+    ["nin900500"] = true,
+    ["Ardwyck"] = true,
+    ["0kto"] = true,
+    ["Blackrep"] = true,
+    ["sillypure"] = true,
+    ["RAE181"] = true,
+    ["colosae"] = true,
+    ["TyrantKDN"] = true,
+    ["PartiallyGreen"] = true,
+    ["athreose"] = true,
+    ["Nickaladormz"] = true,
+    ["TimmySavage"] = true,
+    ["Ossalac"] = true,
+    ["theone78lol"] = true,
+    ["PeakDev"] = true,
+    ["vinjiso"] = true,
+    ["EnamelMammal"] = true,
+    ["JohnDrinkin"] = true
 }
 
 local function createUI()
@@ -32,19 +33,16 @@ local function createUI()
     
     local existingGui = playerGui:FindFirstChild("PlayerListGui")
     if existingGui then
-        print("UI already exists")
         return existingGui.Frame
     end
 
-    print("Creating UI")
     local screenGui = Instance.new("ScreenGui")
     screenGui.Name = "PlayerListGui"
     screenGui.Parent = playerGui
 
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(0.2, 0, 0.4, 0)
-    frame.Position = UDim2.new(0.8, 0, 1, -10)
-    frame.AnchorPoint = Vector2.new(0, 1)
+    frame.Position = UDim2.new(0.8, 0, 0.6, 0)
     frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
     frame.BorderSizePixel = 2
     frame.BackgroundTransparency = 0.7
@@ -58,7 +56,6 @@ local function createUI()
 end
 
 local function updatePlayerList()
-    print("Updating player list")
     local frame = createUI()
     for _, child in ipairs(frame:GetChildren()) do
         if child:IsA("TextLabel") then
@@ -67,25 +64,28 @@ local function updatePlayerList()
     end
 
     for _, player in ipairs(Players:GetPlayers()) do
-        print("Adding player:", player.Name)
+        local roleText = ""
         local textColor = Color3.fromRGB(255, 255, 255)
-        if specialUsers[player.Name] then
-            textColor = Color3.fromRGB(128, 0, 128)
-        elseif anotherRoleUsers[player.Name] then
+        
+        if protectUsers[player.Name] then
+            roleText = " [Protect]"
             textColor = Color3.fromRGB(0, 0, 255)
         end
-
+        if becareFullUsers[player.Name] then
+            roleText = roleText .. " [BecareFull]"
+            textColor = Color3.fromRGB(128, 0, 128)
+        end
+        
         local playerLabel = Instance.new("TextLabel")
         playerLabel.Size = UDim2.new(1, 0, 0, 25)
         playerLabel.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
         playerLabel.TextColor3 = textColor
-        playerLabel.Text = player.Name
+        playerLabel.Text = player.Name .. roleText
         playerLabel.Parent = frame
     end
 end
 
 local function onCharacterAdded()
-    print("Character added, updating UI")
     updatePlayerList()
 end
 
@@ -94,12 +94,5 @@ player.CharacterAdded:Connect(onCharacterAdded)
 
 updatePlayerList()
 
-Players.PlayerAdded:Connect(function(newPlayer)
-    print("Player joined:", newPlayer.Name)
-    updatePlayerList()
-end)
-
-Players.PlayerRemoving:Connect(function(leavingPlayer)
-    print("Player left:", leavingPlayer.Name)
-    updatePlayerList()
-end)
+Players.PlayerAdded:Connect(updatePlayerList)
+Players.PlayerRemoving:Connect(updatePlayerList)
