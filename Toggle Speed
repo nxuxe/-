@@ -3,10 +3,10 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
 local player = Players.LocalPlayer
-local speedNormal = 16
 local speedFast = 40
 local isFast = false
 local humanoid
+local defaultSpeed -- Stores the original speed from the game
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = player:WaitForChild("PlayerGui")
@@ -23,12 +23,13 @@ speedLabel.Parent = screenGui
 local function setupCharacter(character)
     humanoid = character:WaitForChild("Humanoid")
 
+    defaultSpeed = humanoid.WalkSpeed
     isFast = false
     speedLabel.Text = "Speed: Normal"
 
     RunService.RenderStepped:Connect(function()
         if isFast then
-            humanoid.WalkSpeed = speedFast -- Lock at 40
+            humanoid.WalkSpeed = speedFast
         end
     end)
 end
@@ -41,7 +42,7 @@ local function toggleSpeed()
         if isFast then
             humanoid.WalkSpeed = speedFast -- Lock at 40
         else
-            humanoid.WalkSpeed = speedNormal -- Reset to normal (game handles sprinting)
+            humanoid.WalkSpeed = defaultSpeed -- Restore the game's default speed
         end
     end
 end
