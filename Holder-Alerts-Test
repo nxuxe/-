@@ -12,13 +12,14 @@ local function createHolderJoinAlert()
 
     local ScreenGui = Instance.new("ScreenGui")
     ScreenGui.Name = "HolderAlertUI"
+    ScreenGui.ResetOnSpawn = false
     ScreenGui.Parent = LocalPlayer:FindFirstChildOfClass("PlayerGui")
 
     local Frame = Instance.new("Frame")
-    Frame.Size = UDim2.new(0.08, 0, 0.04, 0)  -- UI reduced by about two-thirds
-    Frame.Position = UDim2.new(0.02, 0, 0.05, 0)  -- Middle left & top (sandwiched)
-    Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Black background
-    Frame.BackgroundTransparency = 0.8  -- 80% transparency
+    Frame.Size = UDim2.new(0.08, 0, 0.04, 0)
+    Frame.Position = UDim2.new(0.02, 0, 0.05, 0)
+    Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Frame.BackgroundTransparency = 0.8
     Frame.Parent = ScreenGui
 
     local TextLabel = Instance.new("TextLabel")
@@ -27,7 +28,7 @@ local function createHolderJoinAlert()
     TextLabel.TextScaled = false
     TextLabel.TextSize = 24
     TextLabel.BackgroundTransparency = 1
-    TextLabel.TextColor3 = Color3.fromRGB(0, 0, 255)
+    TextLabel.TextColor3 = Color3.fromRGB(0, 0, 255)  -- Blue text
     TextLabel.Parent = Frame
 
     return ScreenGui, Frame
@@ -54,7 +55,6 @@ local function showHolderJoinAlert()
             end
             Frame.Visible = not Frame.Visible
         end
-        removeHolderJoinAlert()
     end
 
     task.spawn(keepAlertFlashing)
@@ -69,5 +69,6 @@ end)
 Players.PlayerRemoving:Connect(function(player)
     if player.Name == Holder then
         AlertActive = false
+        removeHolderJoinAlert()
     end
 end)
