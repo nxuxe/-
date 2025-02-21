@@ -1,0 +1,83 @@
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local HeadModerators = { "colosae" }
+
+local AlertActive = false
+
+local function createHeadModJoinAlert()
+    local existingUI = LocalPlayer:FindFirstChildOfClass("PlayerGui"):FindFirstChild("HeadModAlertUI")
+    if existingUI then
+        return existingUI
+    end
+
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "HeadModAlertUI"
+    ScreenGui.ResetOnSpawn = false
+    ScreenGui.Parent = LocalPlayer:FindFirstChildOfClass("PlayerGui")
+
+    local Frame = Instance.new("Frame")
+    Frame.Size = UDim2.new(0.08, 0, 0.04, 0)
+    Frame.Position = UDim2.new(0.02, 0, 0.05, 0)
+    Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Frame.BackgroundTransparency = 0.8
+    Frame.Parent = ScreenGui
+
+    local TextLabel = Instance.new("TextLabel")
+    TextLabel.Text = " ! ! ! HEAD MODERATOR JOINED ! ! ! "
+    TextLabel.Size = UDim2.new(1, 0, 1, 0)
+    TextLabel.TextScaled = false
+    TextLabel.TextSize = 26
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.TextColor3 = Color3.fromRGB(0, 0, 255)
+    TextLabel.Parent = Frame
+
+    return ScreenGui, Frame
+end
+
+local function removeHeadModJoinAlert()
+    local existingUI = LocalPlayer:FindFirstChildOfClass("PlayerGui"):FindFirstChild("HeadModAlertUI")
+    if existingUI then
+        existingUI:Destroy()
+    end
+end
+
+local function showHeadModJoinAlert()
+    if AlertActive then return end
+    AlertActive = true
+
+    local ScreenGui, Frame = createHeadModJoinAlert()
+
+    local function keepAlertFlashing()
+        while AlertActive do
+            wait(0.25)
+            if ScreenGui and ScreenGui.Parent then
+                Frame.Visible = not Frame.Visible
+            end
+        end
+    end
+
+    task.spawn(keepAlertFlashing)
+end
+
+local function isHeadModerator(name)
+    for _, mod in ipairs(HeadModerators) do
+        if name == mod then
+            return true
+        end
+    end
+    return false
+end
+
+Players.PlayerAdded:Connect(function(player)
+    if isHeadModerator(player.Name) then
+        showHeadModJoinAlert()
+    end
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+    if isHeadModerator(player.Name) then
+        AlertActive = false
+        removeHeadModJoinAlert()
+    end
+end)
