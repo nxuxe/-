@@ -1,16 +1,17 @@
 local scripts = {
-    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/PDS-Alerts-H-C",
+    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Fov-MouseWheel",
+    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Toggle%20Speed",
     "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/PDS-Alert-Kit-Test",
     "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/PDS-Entities-box",
-    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Fov-MouseWheel",
-    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/Toggle%20Speed"
+    "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/PDS-Alerts-H-C"
 }
 
-for _, url in pairs(scripts) do
-    local success, err = pcall(function()
-        loadstring(game:HttpGet(url))()
+for _, url in ipairs(scripts) do
+    local success, result = pcall(function()
+        return loadstring(game:HttpGet(url))()
     end)
+    
     if not success then
-        warn("Failed to load script:", url, err)
+        warn("Failed to load script from: " .. url .. " - Error: " .. tostring(result))
     end
 end
