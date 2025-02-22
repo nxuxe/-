@@ -33,7 +33,7 @@ local function createYsrJoinAlert()
 
     local Sound = Instance.new("Sound")
     Sound.SoundId = "rbxassetid://82719020266339"
-    Sound.Volume = 1
+    Sound.Volume = 0.5
     Sound.Looped = false
     Sound.Parent = ScreenGui
 
