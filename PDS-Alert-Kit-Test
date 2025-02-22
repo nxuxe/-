@@ -8,11 +8,19 @@ local scripts = {
     "https://raw.githubusercontent.com/nxuxe/-/refs/heads/main/PDS-ysr-Alerts-Test"
 }
 
-for _, url in pairs(scripts) do
-    local success, err = pcall(function()
-        loadstring(game:HttpGet(url))()
+for _, url in ipairs(scripts) do
+    task.wait(0.5) -- Prevent rate limiting
+
+    task.spawn(function()
+        local success, result = pcall(function()
+            local scriptContent = game:HttpGet(url, true)
+            return loadstring(scriptContent)()
+        end)
+
+        if not success then
+            warn("❌ Failed to load script from: " .. url .. " | Error: " .. tostring(result))
+        else
+            print("✅ Successfully loaded: " .. url)
+        end
     end)
-    if not success then
-        warn("Failed to load script:", url, err)
-    end
 end
