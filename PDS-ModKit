@@ -7,11 +7,18 @@ local scripts = {
 }
 
 for _, url in ipairs(scripts) do
-    local success, result = pcall(function()
-        return loadstring(game:HttpGet(url))()
+    task.wait(0.5) -- Prevent rate limiting
+
+    task.spawn(function()
+        local success, result = pcall(function()
+            local scriptContent = game:HttpGet(url, true)
+            return loadstring(scriptContent)()
+        end)
+
+        if not success then
+            warn("❌ Failed to load script from: " .. url .. " | Error: " .. tostring(result))
+        else
+            print("✅ Successfully loaded: " .. url)
+        end
     end)
-    
-    if not success then
-        warn("Failed to load script from: " .. url .. " - Error: " .. tostring(result))
-    end
 end
