@@ -2,12 +2,7 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
 local player = Players.LocalPlayer
-local playerGui = player:FindFirstChild("PlayerGui") or player:WaitForChild("PlayerGui")
-
-if playerGui:FindFirstChild("CoordinatesUI") then
-    warn("Coordinates UI already running!")
-    return
-end
+local playerGui = player:WaitForChild("PlayerGui")
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "CoordinatesUI"
@@ -24,26 +19,25 @@ coordLabel.Font = Enum.Font.GothamBold
 coordLabel.TextScaled = true
 coordLabel.Parent = screenGui
 
-local humanoidRootPart
+local function getPlayerPosition()
+    local character = player.Character
+    if character and character.PrimaryPart then
+        local pos = character.PrimaryPart.Position
+        return Vector3.new(math.floor(pos.X), math.floor(pos.Y), math.floor(pos.Z))
+    end
+    return Vector3.new(0, 0, 0)
+end
 
 local function updateCoordinates()
-    if humanoidRootPart then
-        local pos = humanoidRootPart.Position
-        coordLabel.Text = string.format("Coordinates: (%.1f, %.1f, %.1f)", pos.X, pos.Y, pos.Z)
-    end
+    local pos = getPlayerPosition()
+    coordLabel.Text = string.format("Coordinates: (%d, %d, %d)", pos.X, pos.Y, pos.Z)
 end
 
-local function onCharacterAdded(character)
-    humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+player.CharacterAdded:Connect(function(character)
+    character:GetPropertyChangedSignal("PrimaryPart"):Connect(updateCoordinates)
     updateCoordinates()
-end
-
-player.CharacterAdded:Connect(onCharacterAdded)
-
-if player.Character then
-    onCharacterAdded(player.Character)
-end
+end)
 
 RunService.RenderStepped:Connect(updateCoordinates)
 
-print("Coordinates UI has been added!")
+updateCoordinates()
