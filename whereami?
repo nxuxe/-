@@ -9,8 +9,8 @@ screenGui.ResetOnSpawn = false
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
 local coordLabel = Instance.new("TextLabel")
-coordLabel.Size = UDim2.new(0.2, 0, 0.05, 0)
-coordLabel.Position = UDim2.new(0.4, 0, 0.1, 0)
+coordLabel.Size = UDim2.new(0.25, 0, 0.05, 0)
+coordLabel.Position = UDim2.new(0.375, 0, 0.1, 0)
 coordLabel.BackgroundTransparency = 0.3
 coordLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 coordLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -18,19 +18,28 @@ coordLabel.Font = Enum.Font.GothamBold
 coordLabel.TextScaled = true
 coordLabel.Parent = screenGui
 
+local textSizeConstraint = Instance.new("UITextSizeConstraint")
+textSizeConstraint.MaxTextSize = 24
+textSizeConstraint.Parent = coordLabel
+
+local humanoidRootPart
+
 local function updateCoordinates()
-    local character = player.Character
-    if character then
-        local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-        if humanoidRootPart then
-            local pos = humanoidRootPart.Position
-            coordLabel.Text = string.format("Coordinates: (%.1f, %.1f, %.1f)", pos.X, pos.Y, pos.Z)
-        end
+    if humanoidRootPart then
+        local pos = humanoidRootPart.Position
+        coordLabel.Text = string.format("Coordinates: (%.1f, %.1f, %.1f)", pos.X, pos.Y, pos.Z)
     end
 end
 
-RunService.RenderStepped:Connect(updateCoordinates)
+local function onCharacterAdded(character)
+    humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    updateCoordinates()
+end
 
-player.CharacterAdded:Connect(function(newCharacter)
-    newCharacter:WaitForChild("HumanoidRootPart")
-end)
+player.CharacterAdded:Connect(onCharacterAdded)
+
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+
+RunService.RenderStepped:Connect(updateCoordinates)
