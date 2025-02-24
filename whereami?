@@ -1,0 +1,17 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
+local function printCoordinates()
+    local character = player.Character
+    if character then
+        local rootPart = character:FindFirstChild("HumanoidRootPart")
+        if rootPart then
+            local position = rootPart.Position
+            print(string.format("Your Coordinates: X: %.2f, Y: %.2f, Z: %.2f", position.X, position.Y, position.Z))
+        end
+    end
+end
+
+RunService.Heartbeat:Connect(printCoordinates)
