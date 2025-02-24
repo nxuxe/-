@@ -1,0 +1,49 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+if game:GetService("RunService"):IsStudio() then
+    return
+end
+
+local lockedPosition = Vector3.new(299, -1437, 7092)
+local player = Players.LocalPlayer
+local resetEnabled = false
+
+local function lockPosition()
+    if player.Character and player.Character.PrimaryPart then
+        player.Character.PrimaryPart.CFrame = CFrame.new(lockedPosition)
+    end
+end
+
+local function checkPlayers()
+    local playerCount = #Players:GetPlayers()
+    resetEnabled = playerCount > 1 -- If there's more than 1 player (excluding you), enable reset
+end
+
+local function monitorReset()
+    while true do
+        if resetEnabled and player.Character then
+            player.Character:BreakJoints()
+        end
+        wait(2)
+    end
+end
+
+Players.PlayerAdded:Connect(checkPlayers)
+Players.PlayerRemoving:Connect(checkPlayers)
+
+local function onCharacterAdded(character)
+    character:WaitForChild("HumanoidRootPart")
+    character.PrimaryPart = character:FindFirstChild("HumanoidRootPart")
+
+    RunService.RenderStepped:Connect(lockPosition)
+end
+
+player.CharacterAdded:Connect(onCharacterAdded)
+
+task.spawn(monitorReset)
+
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+checkPlayers()
