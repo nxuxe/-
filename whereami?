@@ -2,11 +2,17 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
 local player = Players.LocalPlayer
+local playerGui = player:FindFirstChild("PlayerGui") or player:WaitForChild("PlayerGui")
+
+if playerGui:FindFirstChild("CoordinatesUI") then
+    warn("Coordinates UI already running!")
+    return
+end
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "CoordinatesUI"
 screenGui.ResetOnSpawn = false
-screenGui.Parent = player:WaitForChild("PlayerGui")
+screenGui.Parent = playerGui
 
 local coordLabel = Instance.new("TextLabel")
 coordLabel.Size = UDim2.new(0.25, 0, 0.05, 0)
@@ -17,10 +23,6 @@ coordLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 coordLabel.Font = Enum.Font.GothamBold
 coordLabel.TextScaled = true
 coordLabel.Parent = screenGui
-
-local textSizeConstraint = Instance.new("UITextSizeConstraint")
-textSizeConstraint.MaxTextSize = 24
-textSizeConstraint.Parent = coordLabel
 
 local humanoidRootPart
 
@@ -43,3 +45,5 @@ if player.Character then
 end
 
 RunService.RenderStepped:Connect(updateCoordinates)
+
+print("Coordinates UI has been added!")
