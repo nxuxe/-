@@ -23,7 +23,7 @@ local function createYsrJoinAlert()
     Frame.Parent = ScreenGui
 
     local TextLabel = Instance.new("TextLabel")
-    TextLabel.Text = "! ! 박원순 ! !"
+    TextLabel.Text = "! ! Admin Here ! !"
     TextLabel.Size = UDim2.new(1, 0, 1, 0)
     TextLabel.TextScaled = true
     TextLabel.TextSize = 28
@@ -32,7 +32,7 @@ local function createYsrJoinAlert()
     TextLabel.Parent = Frame
 
     local Sound = Instance.new("Sound")
-    Sound.SoundId = "rbxassetid://82719020266339"
+    Sound.SoundId = "rbxassetid://6210043412"
     Sound.Volume = 5
     Sound.Looped = false
     Sound.Parent = ScreenGui
