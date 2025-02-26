@@ -16,4 +16,4 @@ ab.Size=UDim2.new(0,370,0,44)ab.Font=Enum.Font.ArialBold;ab.Text="Status: Active
 ab.TextColor3=Color3.new(0,1,1)ab.TextSize=20;local bb=game:service'VirtualUser'
 game:service'Players'.LocalPlayer.Idled:connect(function()
 bb:CaptureController()bb:ClickButton2(Vector2.new())
-ab.Text="안녕 하시긔? 우리 원순씨가 당신을 보호 해줄꺼에용? ❤️"wait(2)ab.Text="Status : Active"end)
+ab.Text="안녕 하시긔? UI를 건들지 말아용 💀😼"wait(2)ab.Text="Status : Active"end)
